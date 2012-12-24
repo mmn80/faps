@@ -6,13 +6,14 @@ Yet another Fraps for Linux (name comes from "Frames & Actions Per Second", seri
 Features
 --------
 
-- launches a special process to listen raw key events on `/dev/input/eventX`
-- works with full screen SDL games which are known to grab the entire keyboard and make XGrabKey useless
-- during install key daemon is given capabilities with `setcap "CAP_DAC_READ_SEARCH+pe"` and does not require root access during operation
-- key deamon measures APM (actions per minute)
-- daemon communicates with main program through a fifo
-- daemon kills himself if client disconnects from fifo, no way to hang in the background
-- for FPS measuring the library uses `LD_PRELOAD` to hook the Xlib buffer swap function `glXSwapBuffers` (does not work with SDL, need better method)
+- launches a special process `faps-daemon` to listen raw key events on `/dev/input/eventX`
+- robustly detects all keyboard devices with `libudev`
+- works with full screen SDL games which are known to grab the entire keyboard and make `XGrabKey` useless
+- during install `faps-daemon` is given capabilities with `setcap "CAP_DAC_READ_SEARCH+pe"` and does not require root access during normal operation
+- `faps-deamon` measures APM (actions per minute) based on the key press events from the last 10 sec (configurable), with a linear weighting applied (from 0 to 2)
+- `faps-daemon` communicates with main program through a fifo
+- `faps-daemon` kills itself if client disconnects from fifo, no way to hang in the background
+- for FPS measuring the library `faps-lib.so` uses `LD_PRELOAD` to hook the Xlib buffer swap function `glXSwapBuffers` (does not work with SDL though, need better method)
 - FPS and APM displayed in overlay
 - screen & video capture not implemented yet
 
@@ -38,7 +39,7 @@ I will make an Arch AUR package when it's complete.
 Hotkeys
 -------
 
-- `Ctrl + F9 ` toggle FPS (frames per second) overlay
+- `Ctrl +  F9` toggle FPS (frames per second) overlay
 - `Ctrl + F10` toggle APM (actions per minute) overlay
 - `Ctrl + F11` start/stop video capture
 - `Ctrl + F12` take screenshot
@@ -48,11 +49,11 @@ Usage
 
     faps [faps arguments] program [program arguments]
 
-- `-u N ` FPS update interval in msec (default: 1000)
-- `-v N ` APM update interval in seconds (default: 1)
-- `-f N ` framerate limit in frames per second
+- `-u  N` FPS update interval in msec (default: 1000)
+- `-v  N` APM update interval in seconds (default: 1)
+- `-f  N` framerate limit in frames per second
 - `-p 32` loads the 32 bit version of the library on a x86_64 system (eg: for Steam beta)
-- `-i N ` interval in seconds to be used when computing APM (default: 10)
+- `-i  N` interval in seconds to be used when computing APM (default: 10)
 
 
 Unlicense
