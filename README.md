@@ -6,20 +6,20 @@ Yet another Fraps for Linux (name comes from "Frames & Actions Per Second", seri
 Features
 --------
 
-- launches a special process to listen raw key events on /dev/input/eventX
+- launches a special process to listen raw key events on `/dev/input/eventX`
 - works with full screen SDL games which are known to grab the entire keyboard and make XGrabKey useless
-- during install key daemon is given capabilities (setcap "CAP_DAC_READ_SEARCH+pe") and does not require root access during operation
+- during install key daemon is given capabilities with 'setcap "CAP_DAC_READ_SEARCH+pe"' and does not require root access during operation
 - key deamon measures APM (actions per minute)
 - daemon communicates with main program through a fifo
 - daemon kills himself if client disconnects from fifo, no way to hang in the background
-- for FPS measuring library uses LD_PRELOAD to hook glXSwapBuffers (does not work with SDL, need better method)
+- for FPS measuring the library uses `LD_PRELOAD` to hook the Xlib buffer swap function `glXSwapBuffers` (does not work with SDL, need better method)
 - FPS and APM displayed in overlay
 - screen & video capture not implemented yet
 
 Installation
 ------------
 
-On 64 bit systems use `make all` to compile both the 64 and a 32 bit version of the dynamic library (requires the `multilib` version of your dev tools to be installed; see Arch Wiki for details).
+On 64 bit systems use `make all` to compile both the 64 and a 32 bit version of the dynamic library (requires the `[multilib]` version of your dev tools to be installed; see [Arch Wiki][1] for details).
 
     make all
     sudo make install
@@ -63,3 +63,5 @@ Unlicense
 ---------
 
 faps is free and unencumbered public domain software. For more information, see <http://unlicense.org/>.
+
+[1]: https://wiki.archlinux.org/index.php/Arch64_FAQ#Can_I_build_32-bit_packages_for_i686_inside_Arch64.3F
