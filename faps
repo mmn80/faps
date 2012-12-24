@@ -1,0 +1,77 @@
+#!/bin/sh
+
+PREFIX=/usr/local
+SUFFIX_32=""
+APM_INTERVAL=10
+APM_FIFO_INTERVAL=1
+HELP='usage:\n
+faps [faps arguments] program [program arguments]
+\n\nfaps arguments:\n
+-u N\t\tFPS update interval in msec (default: 1000)\n
+-v N\t\tAPM update interval in seconds (default: 1)\n
+-f N\t\tframerate limit in frames per second\n
+-p 32\t\tloads the 32 bit version of the library on a x86_64 system (eg: for Steam beta)\n
+-i N\t\tinterval in seconds to be used when computing APM (default: 10)
+\n\nkey actions:\n
+Ctrl + F9\ttoggle FPS (frames per second) overlay\n
+Ctrl + F10\ttoggle APM (actions per minute) overlay\n
+Ctrl + F11\tstart/stop video capture\n
+Ctrl + F12\ttake screenshot'
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+  -i)
+    if [ -z "$2" ]; then
+      echo -e $HELP >&2
+      exit 1
+    fi
+    APM_INTERVAL="$2"
+    shift;;
+  -v)
+    if [ -z "$2" ]; then
+      echo -e $HELP >&2
+      exit 1
+    fi
+    APM_FIFO_INTERVAL="$2"
+    shift;;
+  -f)
+    if [ -z "$2" ]; then
+      echo -e $HELP >&2
+      exit 1
+    fi
+    export FAPS_FPS_LIMIT="$2"
+    shift;;
+  -u)
+    if [ -z "$2" ]; then
+      echo -e $HELP >&2
+      exit 1
+    fi
+    export FAPS_FPS_UPDATE_RATE="$2"
+    shift;;
+  -p)
+    if [ "$2" != "32" ]; then
+      echo -e $HELP
+      exit 1
+    fi
+    SUFFIX_32="$2"
+    shift;;
+  -*)
+    echo -e $HELP >&2
+    exit 1;;
+  *)
+    break;;
+  esac
+
+  shift
+done
+
+if [ -z "$1" ]; then
+  echo -e $HELP >&2
+  exit 1
+fi
+
+export FAPS_FIFO_PATH="/tmp/faps.$(basename $*).$$.fifo"
+
+$PREFIX/bin/faps-daemon -t $FAPS_FIFO_PATH -i $APM_INTERVAL -v $APM_FIFO_INTERVAL &
+
+LD_PRELOAD="$PREFIX/lib/faps-lib${SUFFIX_32}.so $LD_PRELOAD" $*
