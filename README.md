@@ -8,7 +8,7 @@ Features
 
 - launches a special process to listen raw key events on `/dev/input/eventX`
 - works with full screen SDL games which are known to grab the entire keyboard and make XGrabKey useless
-- during install key daemon is given capabilities with 'setcap "CAP_DAC_READ_SEARCH+pe"' and does not require root access during operation
+- during install key daemon is given capabilities with `setcap "CAP_DAC_READ_SEARCH+pe"` and does not require root access during operation
 - key deamon measures APM (actions per minute)
 - daemon communicates with main program through a fifo
 - daemon kills himself if client disconnects from fifo, no way to hang in the background
@@ -38,25 +38,21 @@ I will make an Arch AUR package when it's complete.
 Hotkeys
 -------
 
-- Ctrl + F9     toggle FPS (frames per second) overlay
-- Ctrl + F10    toggle APM (actions per minute) overlay
-- Ctrl + F11    start/stop video capture
-- Ctrl + F12    take screenshot
+- `Ctrl + F9 ` toggle FPS (frames per second) overlay
+- `Ctrl + F10` toggle APM (actions per minute) overlay
+- `Ctrl + F11` start/stop video capture
+- `Ctrl + F12` take screenshot
 
 Usage
 -----
 
     faps [faps arguments] program [program arguments]
 
--u N        FPS update interval in msec (default: 1000)
-
--v N        APM update interval in seconds (default: 1)
-
--f N        framerate limit in frames per second
-
--p 32       loads the 32 bit version of the library on a x86_64 system (eg: for Steam beta)
-
--i N        interval in seconds to be used when computing APM (default: 10)
+- `-u N ` FPS update interval in msec (default: 1000)
+- `-v N ` APM update interval in seconds (default: 1)
+- `-f N ` framerate limit in frames per second
+- `-p 32` loads the 32 bit version of the library on a x86_64 system (eg: for Steam beta)
+- `-i N ` interval in seconds to be used when computing APM (default: 10)
 
 
 Unlicense
