@@ -15,3 +15,7 @@
 *.exe
 *.out
 *.app
+faps-daemon
+
+# Gvim Session
+.session.vim
