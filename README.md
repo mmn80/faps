@@ -1,7 +1,7 @@
 faps
 ====
 
-Yet another Fraps for Linux
+Yet another Fraps for Linux (name comes from "Frames & Actions Per Second", seriously :)
 
 Features
 --------
@@ -19,35 +19,43 @@ Features
 Installation
 ------------
 
-On 64 bit systems use "make all" to compile both the 64 and a 32 bit version (requires the "multilib" version of your dev tools to be installed; see Arch Wiki for details). The 32 bit version is required for Steam. Run Steam with "faps -p 32 steam".
+On 64 bit systems use `make all` to compile both the 64 and a 32 bit version of the dynamic library (requires the `multilib` version of your dev tools to be installed; see Arch Wiki for details).
 
-make all
-sudo make install
+    make all
+    sudo make install
 
-On 32 bit systems and vanilla 64 just do the usual:
+The 32 bit version is required for Steam. Run Steam with: 
 
-make
-sudo make install
+    faps -p 32 steam
+
+On 32 bit systems and vanilla x86_64 just do the usual:
+
+    make
+    sudo make install
 
 I will make an Arch AUR package when it's complete.
 
 Hotkeys
 -------
 
-Ctrl + F9     toggle FPS (frames per second) overlay
-Ctrl + F10    toggle APM (actions per minute) overlay
-Ctrl + F11    start/stop video capture
-Ctrl + F12    take screenshot
+- Ctrl + F9     toggle FPS (frames per second) overlay
+- Ctrl + F10    toggle APM (actions per minute) overlay
+- Ctrl + F11    start/stop video capture
+- Ctrl + F12    take screenshot
 
 Usage
 -----
 
-faps [faps arguments] program [program arguments]
+    faps [faps arguments] program [program arguments]
 
--u N        FPS update interval in msec (default: 1000)\n
--v N        APM update interval in seconds (default: 1)\n
--f N        framerate limit in frames per second\n
--p 32       loads the 32 bit version of the library on a x86_64 system (eg: for Steam beta)\n
+-u N        FPS update interval in msec (default: 1000)
+
+-v N        APM update interval in seconds (default: 1)
+
+-f N        framerate limit in frames per second
+
+-p 32       loads the 32 bit version of the library on a x86_64 system (eg: for Steam beta)
+
 -i N        interval in seconds to be used when computing APM (default: 10)
 
 
